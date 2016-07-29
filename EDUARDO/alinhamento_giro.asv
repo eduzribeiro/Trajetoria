@@ -6,7 +6,7 @@ clc
 
 %% Carregar dados
 
-h = dados_novos('data\slide7.txt','Dados2.txt',1,1);
+h = dados_novos('data\yurei4.txt','Dados2.txt',1,1);
 
 dados = load('Dados2.txt');
 %dados=dados(1:310,:);
@@ -19,11 +19,11 @@ a = dados(:,2:4); % Acelerômetro
 
 w = dados(:,5:7); % Girômetro
 
- disp('Giro')
-% 
- [x y z]=filtrado_dados_resta(w,1,1300)
-% 
- w=filtrado_resta(w,x,y,z);
+%  disp('Giro')
+% % 
+%  [x y z]=filtrado_dados_resta(w,1,2500)
+% % 
+%  w=filtrado_resta(w,x,y,z);
 
 % L =9;
 % w(:,1) = smooth(w(:,1),L);
@@ -166,7 +166,7 @@ ylabel('Aceleração(m/s²)')
 
 %disp('Acc')
 
-[x y z]=filtrado_dados_resta(a_n,1,1500);
+[x y z]=filtrado_dados_resta(a_n,1,400);
 
 a_n2=filtrado_resta(a_n,x,y,z);
 
@@ -225,7 +225,7 @@ ylabel('Velocidade(m/s)')
 %ylim([-1,0.5])
 
 figure(10)
-plot(v,Sx_n,'-s',v,Sy_n,'-o',v,Sz_n,'-<')
+plot(t,Sx_n,'-s',t,Sy_n,'-o',t,Sz_n,'-<')
 legend('Sx','Sy','Sz');
 xlabel('Tempo')
 ylabel('Deslocamento (m)')
