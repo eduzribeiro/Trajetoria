@@ -1,0 +1,7 @@
+function pausa = detector_pausa(a_n2,ruido)
+
+
+
+a_n3=filtrado_iir_hp(a_n2);
+
+end

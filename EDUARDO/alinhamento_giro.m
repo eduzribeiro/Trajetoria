@@ -172,6 +172,8 @@ ylabel('Aceleração(m/s²)')
 
 a_n2=filtrado_resta(a_n,x,y,z);
 
+ruido = nivel_ruido(a_n2,bias);
+
 
 %a_n2=filtrado_hp(a_n2);
 
@@ -203,7 +205,9 @@ legend('X','Y','Z')
 
 %% Integração
 
-[Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,bias,a_n2);
+pausa = 0;%detector_pausa(a_n2,ruido);
+
+[Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,bias,a_n2,pausa);
 
 % 
 figure(8)

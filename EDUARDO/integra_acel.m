@@ -1,4 +1,4 @@
-function [Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,bias,a_n2)
+function [Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,bias,a_n2,pausa)
 
     a_n2 = a_n2(bias+1:end,:);
 
