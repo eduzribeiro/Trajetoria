@@ -4,9 +4,11 @@ clear all
 close all
 clc
 
+bias = 1300;
+
 %% Carregar dados
 
-h = dados_novos('data\slide7.txt','Dados2.txt',1,1);
+h = dados_novos('data\slide4.txt','Dados2.txt',1,1);
 
 dados = load('Dados2.txt');
 %dados=dados(1:310,:);
@@ -19,9 +21,9 @@ a = dados(:,2:4); % Acelerômetro
 
 w = dados(:,5:7); % Girômetro
 
- disp('Giro')
+%  disp('Giro')
 % 
- [x y z]=filtrado_dados_resta(w,1,1300)
+ [x y z]=filtrado_dados_resta(w,1,bias)
 % 
  w=filtrado_resta(w,x,y,z);
 
@@ -37,7 +39,7 @@ w = dados(:,5:7); % Girômetro
 %  w(:,1) = w(:,1)-2.7511e-04; %Média de todos os valores sensor estático
 %  w(:,2) = w(:,2)-6.3564e-03;
 %  w(:,3) = w(:,3)-1.7355e-03;
- 
+%  
 %w=filtrado_hp(w);
 
 g = -dados(:,8:10); % -(Sensor de gravidade)
@@ -166,7 +168,7 @@ ylabel('Aceleração(m/s²)')
 
 %disp('Acc')
 
-[x y z]=filtrado_dados_resta(a_n,1,1500);
+[x y z]=filtrado_dados_resta(a_n,1,bias);
 
 a_n2=filtrado_resta(a_n,x,y,z);
 
@@ -201,7 +203,7 @@ legend('X','Y','Z')
 
 %% Integração
 
-[Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt, a_n2);
+[Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,bias,a_n2);
 
 % 
 figure(8)
@@ -210,9 +212,11 @@ grid on
 xlabel('X (m)');
 ylabel('Y (m)');
 zlabel('Z (m)');
-xlim([-1,3]);
-ylim([-1,3]);
-% zlim([-15,3]);
+MAX=max([Sx_n,Sy_n,Sz_n]);
+MIN=min([Sx_n,Sy_n,Sz_n]);
+xlim([MIN,MAX]);
+ylim([MIN,MAX]);
+zlim([MIN,MAX]);
 
 
 figure(9)

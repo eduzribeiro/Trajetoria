@@ -1,4 +1,7 @@
-function [Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt, a_n2)
+function [Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,bias,a_n2)
+
+    a_n2 = a_n2(bias+1:end,:);
+
 
     iTotal = size(a_n2,1);
 
@@ -37,4 +40,12 @@ function [Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt, a_n2)
 
     end
 
+    Vx_n = [zeros(1,bias),Vx_n];
+    Vy_n = [zeros(1,bias),Vy_n];
+    Vz_n = [zeros(1,bias),Vz_n];
+    
+    Sx_n = [zeros(1,bias),Sx_n];
+    Sy_n = [zeros(1,bias),Sy_n];
+    Sz_n = [zeros(1,bias),Sz_n];
+    
 end

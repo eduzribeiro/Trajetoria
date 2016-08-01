@@ -2,7 +2,7 @@
 L=240;
 
 
-A = imread('trajetoria.bmp');
+A = imread('trajetoria7.bmp');
 
 [iTotal jTotal] = size(A);
 
