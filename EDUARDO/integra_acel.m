@@ -1,6 +1,6 @@
 function [Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,bias,a_n2,pausa)
 
-    a_n2 = a_n2(bias+1:end,:);
+    a_n2 = a_n2(1:end,:);
 
 
     iTotal = size(a_n2,1);
@@ -25,6 +25,7 @@ function [Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,bias,a_n2,pausa)
         Vz = Vz + a_n2(u,3)*dt(u);
 
 
+        [Vx Vy Vz] = decide(Vx,Vy,Vz,bias,pausa(u),u);
 					
         Sx = Sx + Vx*dt(u);
         Sy = Sy + Vy*dt(u);
@@ -40,12 +41,24 @@ function [Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,bias,a_n2,pausa)
 
     end
 
-    Vx_n = [zeros(1,bias),Vx_n];
-    Vy_n = [zeros(1,bias),Vy_n];
-    Vz_n = [zeros(1,bias),Vz_n];
-    
-    Sx_n = [zeros(1,bias),Sx_n];
-    Sy_n = [zeros(1,bias),Sy_n];
-    Sz_n = [zeros(1,bias),Sz_n];
+
     
 end
+
+function [Vx2 Vy2 Vz2] = decide(Vx,Vy,Vz,bias,p,u)
+
+Vx2 = Vx;
+Vy2 = Vy;
+Vz2 = Vz;
+
+    if (bias > u) || (p == 1)
+        
+        Vx2=0;
+        Vy2=0;
+        Vz2=0;
+        
+    end
+    
+
+end
+

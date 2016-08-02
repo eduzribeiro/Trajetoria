@@ -159,11 +159,11 @@ legend('X','Y','Z')
 
 %% Integração
 
-[Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt, a_n2);
+[Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,0 ,a_n2,0);
 
 % 
 figure(5)
-plot(Sx_n,Sy_n ,Sx_n(end),Sy_n(end),'o')
+plot3(Sx_n,Sy_n,Sz_n,Sx_n(end),Sy_n(end),Sz_n(end),'o')
 MINX=min(Sx_n); MINY=min(Sy_n); MINZ=min(Sz_n);
 MIN=min([MINX,MINY,MINZ]);
 MAXX=max(Sx_n); MAXY=max(Sy_n); MAXZ=max(Sz_n);

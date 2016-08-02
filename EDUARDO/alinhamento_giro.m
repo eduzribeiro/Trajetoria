@@ -174,6 +174,7 @@ a_n2=filtrado_resta(a_n,x,y,z);
 
 ruido = nivel_ruido(a_n2,bias);
 
+[Dsp Dsa Db] = detector_pausa(a_n2,ruido);
 
 %a_n2=filtrado_hp(a_n2);
 
@@ -197,17 +198,15 @@ ruido = nivel_ruido(a_n2,bias);
 
 
 figure(7)
-plot(v,a_n2(:,1),'-s',v,a_n2(:,2),'-p',v,a_n2(:,3),'-o');
+plot(v,a_n2(:,1),'-s',v,a_n2(:,2),'-p',v,a_n2(:,3),'-o',v,Db,'-*');
 title('Aceleração alinhada e filtrada')
 xlabel('Amostras')
 ylabel('Aceleração(m/s²)')
-legend('X','Y','Z')
+legend('X','Y','Z','Db')
 
 %% Integração
 
-pausa = 0;%detector_pausa(a_n2,ruido);
-
-[Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,bias,a_n2,pausa);
+[Sx_n,Sy_n,Sz_n,Vx_n,Vy_n,Vz_n]=integra_acel(dt,bias,a_n2,Db);
 
 % 
 figure(8)
