@@ -4,11 +4,11 @@ clear all
 close all
 clc
 
-bias = 1300;
+bias = 300;
 
 %% Carregar dados
 
-h = dados_novos('data\slide4.txt','Dados2.txt',1,1);
+h = dados_novos('data\yurei7.txt','Dados2.txt',1,1);
 
 dados = load('Dados2.txt');
 %dados=dados(1:310,:);
@@ -202,7 +202,7 @@ plot(v,a_n2(:,1),'-s',v,a_n2(:,2),'-p',v,a_n2(:,3),'-o',v,Db,'-*');
 title('Aceleração alinhada e filtrada')
 xlabel('Amostras')
 ylabel('Aceleração(m/s²)')
-legend('X','Y','Z','Db')
+legend('X','Y','Z','Dp')
 
 %% Integração
 
@@ -225,14 +225,14 @@ zlim([MIN,MAX]);
 figure(9)
 %plot(v,Vx_n,'-s',v,Vy_n,'-o',v,Vz_n,'-<',v,a_n2(:,1)/20,'-s',v,a_n2(:,2)/20,'-p',v,a_n2(:,3)/20,'-o')
 %legend('Vx_n','Vy_n','Vz_n','ax/20','ay/20','az/20');
-plot(v,Vx_n,'-s',v,Vy_n,'-o',v,Vz_n,'-<')
+plot(t,Vx_n,'-s',t,Vy_n,'-o',t,Vz_n,'-<')
 legend('Vx','Vy','Vz');
-xlabel('Amostras')
+xlabel('Tempo')
 ylabel('Velocidade(m/s)')
 %ylim([-1,0.5])
 
 figure(10)
-plot(v,Sx_n,'-s',v,Sy_n,'-o',v,Sz_n,'-<')
+plot(t,Sx_n,'-s',t,Sy_n,'-o',t,Sz_n,'-<')
 legend('Sx','Sy','Sz');
 xlabel('Tempo')
 ylabel('Deslocamento (m)')
