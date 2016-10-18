@@ -1,3 +1,5 @@
+addpath('..\')
+
 clear all
 close all
 clc
@@ -6,7 +8,7 @@ clc
 
 F = FiltroIIR(H,G);
 
-dados = load('data\yurei7.txt');
+dados = load('..\data\yurei7.txt');
 
 b = dados(:,2:4)'; % Acelerômetro
 
@@ -23,4 +25,6 @@ figure(1)
 
 plot(c,a(1,:),'r',c,a(2,:),'b',c,a(3,:),'g')
 legend('X','Y','Z')
+
+rmpath('..\')
 

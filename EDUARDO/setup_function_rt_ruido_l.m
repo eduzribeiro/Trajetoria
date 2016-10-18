@@ -1,3 +1,4 @@
+% Classe que calcula o ruído dos L primeiros dados
 classdef setup_function_rt_ruido_l < handle
    properties
         ruido0
@@ -8,6 +9,8 @@ classdef setup_function_rt_ruido_l < handle
         JJ
    end
    methods
+       %Construtor inializador do objeto
+       % inival: inicia todas as variaveis
         function obj =setup_function_rt_ruido_l(L)
         
             obj.ruido0=0;
@@ -16,9 +19,13 @@ classdef setup_function_rt_ruido_l < handle
             obj.L=L;
             obj.JJ = 0;
             
-            [H,G] = fir1(16,1/100,'low');          % Highpass Chebyshev Type II
+            [H,G] = fir1(16,1/100,'low');          
             obj.F=FiltroIIR(H,G);
         end
+        
+        %ar: input signal  [1x3]
+        %return :::
+        %ruido0: Ruido dos L primeiros [1x1]
         function ruido0=ruido_de_l(obj,ar)
             
             if obj.I < obj.L+1

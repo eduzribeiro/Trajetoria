@@ -1,7 +1,8 @@
+addpath('..\')
 
 x=setup_function_rt_ruido_l(1500);
 
-dados = load('data\yurei7.txt');
+dados = load('..\data\yurei7.txt');
 
 a = dados(:,2:4); % Acelerômetro
 
@@ -25,3 +26,5 @@ std(a(1:1500,3))
 
 
 ruido(end)
+
+rmpath('..\')
