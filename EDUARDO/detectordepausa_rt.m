@@ -4,9 +4,13 @@ classdef detectordepausa_rt < handle
        
        fator
        U
+       Tau
        Db
        Dsp
        Dsa
+       Dx
+       Dy
+       Dz
        
        %Filtro só pausa
        F
@@ -20,11 +24,15 @@ classdef detectordepausa_rt < handle
        %Construtor inializador do objeto  
         function obj = detectordepausa_rt
         
-            obj.fator = 1.5;
+            obj.fator = 2.5;
             obj.U = 0.3;
+            obj.Tau = 0.1; %Valores mais baixos, decaimento mais lento
             obj.Db = 0;
             obj.Dsp = 0;
             obj.Dsa = 0;
+            obj.Dx = 0;
+            obj.Dy = 0;
+            obj.Dz = 0;
             
             [H,G] = cheby2(4,60,1/1000,'high');
             obj.F=FiltroIIR(H,G);
@@ -33,8 +41,8 @@ classdef detectordepausa_rt < handle
             HM=HM/sum(HM);
             obj.FM=FiltroIIR(HM,1);
             
-            [H1,G1] = fir1(160,1/40,'low');
-            obj.FF=FitroIIR(H1,G1);
+            H1 = fir1(160,1/40,'low');
+            obj.FF=FiltroIIR(H1,1);
             
         end
         
@@ -89,36 +97,41 @@ classdef detectordepausa_rt < handle
           
          function Dsa = detector_so_ativo(obj,a_n2,ruido)
              
-            
+             
              a_x = a_n2 - obj.FF.filter_rt(a_n2);
              a_x2 = abs(a_x);
              
              D = a_x2>=obj.fator*ruido;
              
-             Dx = D(1);
-             Dy = D(2);
-             Dz = D(3);
+             dx = D(1);
+             dy = D(2);
+             dz = D(3);
             
-%              if (Dx(II)==0)
-%                 
-%                  Dx(II)=Dx(II-1)*exp(-Tau);
-%              
-%              end
-% 
-%             if (Dy(II)==0)
-%         
-%                 Dy(II)=Dy(II-1)*exp(-Tau);
-%     
-%             end
-% 
-%             if (Dz(II)==0)
-%         
-%                 Dz(II)=Dz(II-1)*exp(-Tau);
-%     
-%             end   
-%           
+             if (dx==0)
+                
+                 dx = obj.Dx*exp(-obj.Tau);
+             
+             end
+             
+             obj.Dx = dx;
 
-            if ((Dx>obj.U) || (Dy>obj.U) || (Dz>obj.U))
+            if (dy==0)
+        
+                dy=obj.Dy*exp(-obj.Tau);
+    
+            end
+            
+            obj.Dy = dy;
+
+            if (dz==0)
+        
+                dz=obj.Dz*exp(-obj.Tau);
+    
+            end   
+          
+            obj.Dz = dz;
+
+            if ((obj.Dx>obj.U) || (obj.Dy>obj.U) || (obj.Dz>obj.U))
          
                 obj.Dsa = 1;
          

@@ -16,9 +16,15 @@ classdef FiltroIIR < handle
             
             
         end
-        %x e coluna
+        % y sempre é coluna 
         function y = filter_rt(obj,x)
             %correr X
+            if ~iscolumn(x)
+                
+               x = x';
+                
+            end
+            
             M=length(obj.H);
             for II=1:(M-1)
                 obj.X(:,M-II+1)=obj.X(:,M-II);

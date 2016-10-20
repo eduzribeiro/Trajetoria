@@ -20,8 +20,8 @@ classdef media_r_pausa < handle
             obj.aux = 0;
             obj.JJ = 0;
             
-            [H,G] = fir1(16,1/100,'low');          
-            obj.F=FiltroIIR(H,G);
+            [H] = fir1(16,1/100,'low');          
+            obj.F=FiltroIIR(H,1);
             
         end
         
