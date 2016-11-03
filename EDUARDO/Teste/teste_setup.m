@@ -5,7 +5,7 @@ clc
 
 %Carregar dados
 
-dados = load('..\data\yurei7.txt');
+dados = load('..\data\slide4.txt');
 
 %Separar colunas
 
@@ -46,18 +46,7 @@ end
 
 %Classes
 
-S = setup;
-
-MA = matriz_transf_rt;
-
-DEG = decide_g;
-
-DER = decide_r;
-
-DETEC = detectordepausa_rt;
-
-INT = Integrador(0);
-
+S = setup(1500);
 
 %Processo
 
@@ -67,33 +56,14 @@ for II=1:max(size(ar))
 
     [ruido0(II), a(II,:), g0(II,:), w(II,:)] = S.setup_rt(ar(II,:),wr(II,:));
 	
-    %Matriz 
-    
-    M = MA.matriz_transf(w(II,:),dt(II),Db);
-    
-    % Atualizar matriz
-     
-    a_n(II,:) = (M*a(II,:)')';
-    
-    %Calcular e decidir gravidade
-    
-    a_n2(II,:) = DEG.decide_g_rt(a_n(II,:),g0(II,:),Db);
-    
-       
-    %Calcular e decidir ruido
-    
-    ruido_d(II) = DER.decide_r_rt(a_n(II,:),ruido0(II,:),Db)
-    
-    %Detector de pausa
-    
-    Db = DETEC.detector_pausa(a_n2(II,:)',ruido_d(II));
-    
-    %Integral
-    
-    [Sx(II,:) Sy(II,:) Sz(II,:)] = INT.integra_rt(dt(II),a_n2(II,:),Db);
-		
 
 end
+
+b = [1:max(size(ar))];
+
+figure(1) 
+plot(b,ruido0,b,a(:,3),b,g0(:,3),b,w(:,3))
+legend('ruido','a descarte','g0','w restado')
 
 
 

@@ -61,6 +61,8 @@ classdef media_r_pausa < handle
             end
             
             if Db == 0 && obj.aux == 1
+                
+                if obj.L>50
                
                 obj.ruido0n = sqrt(sum((obj.A)/obj.L));
                 obj.ready = 1;
@@ -68,6 +70,13 @@ classdef media_r_pausa < handle
                 obj.L = 0;
                 obj.A = 0;
                 
+                else
+                    
+                obj.L = 0;
+                obj.A = 0;
+                obj.ready = 0;
+                
+                end
             end
                    
             ruido0n = obj.ruido0n;

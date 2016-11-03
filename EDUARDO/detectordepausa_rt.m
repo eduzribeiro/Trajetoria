@@ -12,6 +12,7 @@ classdef detectordepausa_rt < handle
        Dy
        Dz
        
+       
        %Filtro só pausa
        F
        FM
@@ -26,7 +27,7 @@ classdef detectordepausa_rt < handle
         
             obj.fator = 2.5;
             obj.U = 0.3;
-            obj.Tau = 0.1; %Valores mais baixos, decaimento mais lento
+            obj.Tau = 0.05; %Valores mais baixos, decaimento mais lento
             obj.Db = 0;
             obj.Dsp = 0;
             obj.Dsa = 0;
@@ -34,23 +35,27 @@ classdef detectordepausa_rt < handle
             obj.Dy = 0;
             obj.Dz = 0;
             
-            [H,G] = cheby2(4,60,1/1000,'high');
+            
+            P=13;
+            H=fir1(4*P,1/P,'high');
+            G=1;
+            %[H,G] = cheby2(4,60,1/1000,'high');
             obj.F=FiltroIIR(H,G);
             
             HM=ones(1,50);
             HM=HM/sum(HM);
             obj.FM=FiltroIIR(HM,1);
             
-            H1 = fir1(160,1/40,'low');
+            P = 20;
+            H1 = fir1(4*P,1/P,'low');
             obj.FF=FiltroIIR(H1,1);
             
         end
         
-        %an: input signal  [1x3]
-        %Db: detector de pausa [0 (não pausa) ou 1 (pausa)]
+        %an: input signal  [3x1]
+        %nivel_ruido: calculado nas outras funções [1x1]
         %return :::
-        %g0n: Nova média calculado enquanto esteve em pausa [1x3]
-        %ready: Novo dado pronto [1] ou não [0] para ser utilizado
+        %Db: Pausa detectada [1] ou Pausa não detectada [0] 
         
         function Db = detector_pausa(obj,an,nivel_ruido)
             
@@ -79,7 +84,9 @@ classdef detectordepausa_rt < handle
              a_n4 = abs(a_n3);
              a_n5 = obj.FM.filter_rt(a_n4);
              
+             
              D = a_n5<=obj.fator*ruido;
+             
              
              if sum(D)==3
                 

@@ -29,7 +29,7 @@ classdef setup_function_rt_media_l < handle
                 
             end
             
-            if obj.I == obj.L
+            if obj.I == obj.L+1
                
                 obj.g0 = (obj.Si)/obj.L;
                 

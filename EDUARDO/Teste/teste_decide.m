@@ -9,7 +9,7 @@ x = setup_function_rt_media_l(400);
 
 y = media_g_pausa;
 
-z = decide(1);
+z = decide(2);
 
 Db = 0;
 

@@ -6,19 +6,19 @@ clc
 
 x = detectordepausa_rt;
 
-r0=setup_function_rt_ruido_l(1000);
+r0=setup_function_rt_ruido_l(1500);
 
-dados = load('..\data\yurei7.txt');
+dados = load('..\data\slide4.txt');
 
 a = dados(:,2:4); % Acelerômetro
 
-Db = zeros(1,2508);
+Db = zeros(1,2400);
 
-ruido = zeros(1,2508);
+ruido = zeros(1,2400);
 
-D1 = zeros(1,2508);
+D1 = zeros(1,2400);
 
-D2 = zeros(1,2508);
+D2 = zeros(1,2400);
 
 for II=1:max(size(a))
     
@@ -36,8 +36,8 @@ end
 
 b = [1:max(size(a))];
 
-plot(b,a(:,1),'s-',b,Db(:),'s-',b,ruido(:),'s-')
-legend('acc','Db','Ruido')
+plot(b,a(:,1),b,a(:,2),b,a(:,3),'s-',b,Db(:),'s-',b,ruido(:),'s-')
+legend('accx','accy','accz','Db','Ruido')
 
 
 rmpath('..\')

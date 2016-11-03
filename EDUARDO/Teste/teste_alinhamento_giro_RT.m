@@ -5,7 +5,7 @@ clc
 
 %Carregar dados
 
-dados = load('..\data\yurei7.txt');
+dados = load('..\data\slide4.txt');
 
 %Separar colunas
 
@@ -46,7 +46,7 @@ end
 
 %Classes
 
-S = setup;
+S = setup(1500);
 
 MA = matriz_transf_rt;
 
@@ -82,20 +82,60 @@ for II=1:max(size(ar))
        
     %Calcular e decidir ruido
     
-    ruido_d(II) = DER.decide_r_rt(a_n(II,:),ruido0(II,:),Db)
+    ruido_d(II) = DER.decide_r_rt(a_n(II,:),ruido0(II),Db);
     
     %Detector de pausa
     
     Db = DETEC.detector_pausa(a_n2(II,:)',ruido_d(II));
     
+    DSP(II) = DETEC.Dsp;
+    
+    DSA(II) = DETEC.Dsa;
+    
+    Db2(II) = Db;
+    
+       
     %Integral
     
     [Sx(II,:) Sy(II,:) Sz(II,:)] = INT.integra_rt(dt(II),a_n2(II,:),Db);
+    
+    VX(II) = INT.Vx;
+    VY(II) = INT.Vy;
+    VZ(II) = INT.Vz;
 		
 
 end
 
+b = [1:max(size(a))];
 
+figure(1) 
+plot(Sx,Sy,'-o')
+xlabel('x')
+ylabel('y')
+title('Deslocamento (m)')
+xlim([-0.1 0.65]);
+ylim([-0.1 0.65]);
+
+figure(2)
+plot3(Sx,Sy,Sz,Sx(end),Sy(end),Sz(end),'o')
+grid on
+xlabel('X (m)');
+ylabel('Y (m)');
+zlabel('Z (m)');
+MAX=max([Sx Sy Sz]);
+MIN=min([Sx Sy Sz]);
+xlim([-0.1 0.65]);
+ylim([-0.1 0.65]);
+%zlim([MIN MAX]);
+
+figure(3)
+plot(b,a_n2(:,1),b,a_n2(:,2),b,a_n2(:,3),b,Db2*2,b,DSA,'-o',b,DSP*1.5,'-s',b,ruido_d*2.5)
+legend('x2','y2','z2','Db','Dsa','Dsp','ruido')
+
+figure(4)
+plot(b,VX,b,VY,b,VZ)
+grid on
+legend('Vx','Vy','Vz')
 
 rmpath('..\')
 

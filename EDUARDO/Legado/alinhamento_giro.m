@@ -4,11 +4,11 @@ clear all
 close all
 clc
 
-bias = 250;
+bias = 1500;
 
 %% Carregar dados
 
-h = dados_novos('..\data\pausa-quedalivre-pausa.txt','Dados2.txt',1,1);
+h = dados_novos('..\data\slide4.txt','Dados2.txt',1,1);
 
 dados = load('Dados2.txt');
 %dados=dados(1:310,:);

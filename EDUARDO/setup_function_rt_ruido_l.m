@@ -23,7 +23,7 @@ classdef setup_function_rt_ruido_l < handle
             obj.F=FiltroIIR(H,G);
         end
         
-        %ar: input signal  [1x3]
+        %ar: input signal  [3x1]
         %return :::
         %ruido0: Ruido dos L primeiros [1x1]
         function ruido0=ruido_de_l(obj,ar)
@@ -47,7 +47,7 @@ classdef setup_function_rt_ruido_l < handle
                 
             end
             
-            if obj.I == obj.L
+            if obj.I == obj.L+1
                
                 
                 obj.ruido0 = sqrt(sum(obj.Si/obj.L));
