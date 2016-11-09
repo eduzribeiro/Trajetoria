@@ -86,7 +86,7 @@ for II=1:max(size(ar))
     
     %Detector de pausa
     
-    Db = DETEC.detector_pausa(a_n2(II,:)',ruido_d(II));
+    [Db,Dma(II)] = DETEC.detector_pausa(a_n2(II,:)',ruido_d(II));
     
     DSP(II) = DETEC.Dsp;
     
@@ -129,8 +129,8 @@ ylim([-0.1 0.65]);
 %zlim([MIN MAX]);
 
 figure(3)
-plot(b,a_n2(:,1),b,a_n2(:,2),b,a_n2(:,3),b,Db2*2,b,DSA,'-o',b,DSP*1.5,'-s',b,ruido_d*2.5)
-legend('x2','y2','z2','Db','Dsa','Dsp','ruido')
+plot(b,a_n2(:,1),b,a_n2(:,2),b,a_n2(:,3),b,Db2*2,b,DSA,'-o',b,DSP*1.5,'-s',b,ruido_d*2.5,b,Dma,'-^')
+legend('x2','y2','z2','Db','Dsa','Dsp','ruido','D alinhamento')
 
 figure(4)
 plot(b,VX,b,VY,b,VZ)
