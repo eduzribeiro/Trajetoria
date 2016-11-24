@@ -62,21 +62,22 @@ classdef media_r_pausa < handle
             
             if Db == 0 && obj.aux == 1
                 
+                                             
                 if obj.L>50
                
-                obj.ruido0n = sqrt(sum((obj.A)/obj.L));
+                obj.ruido0n = mean(sqrt(obj.A/obj.L));
                 obj.ready = 1;
                 obj.aux = 0;
-                obj.L = 0;
-                obj.A = 0;
-                
+                   
                 else
                     
-                obj.L = 0;
-                obj.A = 0;
                 obj.ready = 0;
                 
                 end
+                
+                obj.L = 0;
+                obj.A = 0;
+                
             end
                    
             ruido0n = obj.ruido0n;

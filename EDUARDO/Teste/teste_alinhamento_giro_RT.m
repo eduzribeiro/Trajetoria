@@ -5,7 +5,7 @@ clc
 
 %Carregar dados
 
-dados = load('..\data\slide4.txt');
+dados = load('..\data\slide6.txt');
 
 %Separar colunas
 
@@ -46,7 +46,7 @@ end
 
 %Classes
 
-S = setup(1500);
+S = setup(1000);
 
 MA = matriz_transf_rt;
 
@@ -129,8 +129,8 @@ ylim([-0.1 0.65]);
 %zlim([MIN MAX]);
 
 figure(3)
-plot(b,a_n2(:,1),b,a_n2(:,2),b,a_n2(:,3),b,Db2*2,b,DSA,'-o',b,DSP*1.5,'-s',b,ruido_d*2.5,b,Dma,'-^')
-legend('x2','y2','z2','Db','Dsa','Dsp','ruido','D alinhamento')
+plot(b,a_n2(:,1),b,a_n2(:,2),b,a_n2(:,3),b,Db2*2,b,DSA,'-o',b,DSP*1.5,'-s',b,ruido_d*3)
+legend('x2','y2','z2','Db','Dsa','Dsp','ruido')
 
 figure(4)
 plot(b,VX,b,VY,b,VZ)

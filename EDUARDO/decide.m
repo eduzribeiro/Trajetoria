@@ -34,6 +34,7 @@ classdef decide < handle
         %Xd: X decidido [1x3] ou [1x1]
         
          function Xd = decide_rt(obj,x0,x0n,ready)
+
             
              if ready == 0 && obj.aux == 0
                  

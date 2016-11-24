@@ -34,7 +34,7 @@ classdef detectordepausa_rt < handle
        %Construtor inializador do objeto  
         function obj = detectordepausa_rt
         
-            obj.fator = 2.5;
+            obj.fator = 3;
             obj.U = 0.3;
             obj.Tau = 0.05; %Valores mais baixos, decaimento mais lento
             obj.Db = 0;
