@@ -1,5 +1,5 @@
-javac -classpath . setup_function_rt_media_l.java
+javac -classpath . Ler.java
 
-java -classpath . setup_function_rt_media_l
+java -classpath . Ler    > logfile.txt
 pause
 

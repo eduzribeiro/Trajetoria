@@ -1,10 +1,10 @@
-
+import net.trucomanx.pdsplibj.pdsra.*;
 
 public class setup_function_rt_media_l {
 
 	private double Si[];
 
-	public double g0[];
+	public PdsMatrix g0;
 
 	private int i,L;
 
@@ -12,7 +12,7 @@ public class setup_function_rt_media_l {
 	public setup_function_rt_media_l(int L){
 
 		this.Si = new double[3];
-		this.g0 = new double[3];
+		this.g0 = new PdsMatrix(1,3);
 
 		this.i = 0;
 
@@ -21,7 +21,12 @@ public class setup_function_rt_media_l {
 
 	}	
 
-   	public double[] media_de_l(double ar[]) {   
+	
+	//ar: input signal  [1x3]
+    //return :::
+	//g0: A media dos L primeiros [1x3]
+
+   	public PdsMatrix media_de_l(double ar[]) {   
 
 	
 		if(this.i<(this.L))
@@ -37,9 +42,9 @@ public class setup_function_rt_media_l {
             
         if(this.i == (this.L))
         {      
-            this.g0[0] = this.Si[0]/L;
-			this.g0[1] = this.Si[1]/L;
-			this.g0[2] = this.Si[2]/L;
+            this.g0.SetValue(0,0,this.Si[0]/L);
+			this.g0.SetValue(0,1,this.Si[1]/L);
+			this.g0.SetValue(0,2,this.Si[2]/L);
                 
         }
 
@@ -47,25 +52,25 @@ public class setup_function_rt_media_l {
         return(g0);
 	}
 
-	public double[] get_g0(){
-		return this.g0;
-	}
+	//public PdsMatrix get_g0(){
+	//	return (g0);
+	//}
 
 
 	public static void main(String[] args) {
 
-		setup_function_rt_media_l var = new setup_function_rt_media_l(1000);
+		setup_function_rt_media_l var = new setup_function_rt_media_l(1500);
 
 		double ar[] = new double[3];
-		double g0[] = new double[3];
+		PdsMatrix g0 = new PdsMatrix(1,3);
 
-		for (int i=0;i<1010;i++){
+		for (int i=0;i<1520;i++){
 
-			ar[0] = 10+0.05*Math.sin(i*25*2*Math.PI/1000);
-			ar[1] = ar[0];
-			ar[2] = ar[1];
+			ar[0] = 5;//10+0.05*Math.sin(i*25*2*Math.PI/1000);
+			ar[1] = 15;//ar[0];
+			ar[2] = 30;//ar[1];
 			g0=var.media_de_l(ar);
-			System.out.println("["+i+"]go: "+g0[0]+" "+g0[1]+" "+g0[2]);
+			System.out.println("["+i+"]go: "+g0);
 		}
 	
 	}

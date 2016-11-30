@@ -36,19 +36,29 @@ classdef media_g_pausa < handle
                 
             end
             
-              if Db == 0 && obj.aux == 0
+             if Db == 0 && obj.aux == 0
                 
                 obj.ready =0;
                 
-            end
+             end
             
-            if Db == 0 && obj.aux == 1
-               
-                obj.g0n = (obj.A)/obj.L;
-                obj.ready = 1;
-                obj.aux = 0;
-                obj.L = 0;
-                obj.A = 0;
+             if Db == 0 && obj.aux == 1
+                
+                
+                if obj.L>50
+                    
+                    obj.g0n = (obj.A)/obj.L;
+                    obj.ready = 1;
+                    obj.aux = 0;
+                
+                else
+                    
+                    obj.ready = 0;
+                
+                end
+                
+                    obj.L = 0;
+                    obj.A = 0;
                 
             end
                    

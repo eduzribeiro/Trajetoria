@@ -6,6 +6,8 @@ dados = load('..\data\yurei7.txt');
 
 a = dados(:,2:4); % Acelerômetro
 
+
+
 for II=1:max(size(a))
 
     g(II,:) = x.descartar(a(II,:));

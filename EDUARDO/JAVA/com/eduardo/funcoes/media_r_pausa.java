@@ -9,7 +9,7 @@ public class media_r_pausa {
 
 	public int ready;
 
-	public double ruido0n;
+	public PdsMatrix ruido0n;
 
 	public PdsFir fx,fy,fz;
 
@@ -18,7 +18,7 @@ public class media_r_pausa {
 
 		this.A = new double[3];
 		
-		this.ruido0n = 0;
+		this.ruido0n = new PdsMatrix(1,1);
 		this.L = 0;
 		this.aux = 0;
 		this.JJ = 0;
@@ -34,35 +34,38 @@ public class media_r_pausa {
 
 
 
-	public double r_pausa_rt(int Db, double an[]) {
+	public PdsMatrix r_pausa_rt(double Db, PdsMatrix an) {
 
+		double a_nx[];
+
+		a_nx = new double[3]; 
                   
 		if (Db == 1)
 		{
 
-			an[0] = an[0] - this.fx.EvaluateValue(an[0]);
-			an[1] = an[1] - this.fy.EvaluateValue(an[1]);
-			an[2] = an[2] - this.fz.EvaluateValue(an[2]);
+			a_nx[0] = an.GetValue(0,0) - this.fx.EvaluateValue(an.GetValue(0,0));
+			a_nx[1] = an.GetValue(0,1) - this.fy.EvaluateValue(an.GetValue(0,1));
+			a_nx[2] = an.GetValue(0,2) - this.fz.EvaluateValue(an.GetValue(0,2));
 			
 			// IMPLEMENTAR FILTRO
 
 			if (this.JJ < 32)
             {       
-            	an[0] = 0;
-				an[1] = 0;
-				an[2] = 0;
+            	a_nx[0] = 0;
+				a_nx[1] = 0;
+				a_nx[2] = 0;
                       
             }
 
 			this.JJ = this.JJ + 1;
 			
-			an[0] = an[0]*an[0];
-			an[1] = an[1]*an[1];
-			an[2] = an[2]*an[2];
+			a_nx[0] = a_nx[0]*a_nx[0];
+			a_nx[1] = a_nx[1]*a_nx[1];
+			a_nx[2] = a_nx[2]*a_nx[2];
 
-			this.A[0] = this.A[0] + an[0];
-			this.A[1] = this.A[1] + an[1];
-			this.A[2] = this.A[2] + an[2];
+			this.A[0] = this.A[0] + a_nx[0];
+			this.A[1] = this.A[1] + a_nx[1];
+			this.A[2] = this.A[2] + a_nx[2];
 
 			this.L = this.L + 1;
 			this.aux = 1;
@@ -84,7 +87,7 @@ public class media_r_pausa {
 			if (this.L>50)
 			{
 
-				this.ruido0n = ((Math.sqrt(this.A[0]/this.L))+(Math.sqrt(this.A[1]/this.L))+(Math.sqrt(this.A[2]/this.L)))/3; 
+				this.ruido0n.SetValue(0,0,((Math.sqrt(this.A[0]/this.L))+(Math.sqrt(this.A[1]/this.L))+(Math.sqrt(this.A[2]/this.L)))/3); 
                 
 				this.ready = 1;
                 this.aux = 0;
@@ -112,6 +115,99 @@ public class media_r_pausa {
 		return(ready);
 	}
 
+	
+
+	public static void main(String[] args) {
+
+		media_r_pausa var = new media_r_pausa("C:\\Users\\Eduardo\\Desktop\\Diversos\\UFLA\\Mestrado\\Trajetoria\\EDUARDO\\JAVA\\CoeficientesFiltros\\ValoresH_media_r_pausa.dat");
+
+		PdsMatrix an = new PdsMatrix(1,3);
+		PdsMatrix ruido0n = new PdsMatrix(1,1);
+		
+		int ready;
+
+		double Db = 0;
+
+		
+		
+		for (int i=0;i<100;i++){
+
+			Db = 0;
+
+			an.SetValue(0,0,15);
+			an.SetValue(0,1,15);
+			an.SetValue(0,2,15);
+		
+			
+			ruido0n = var.r_pausa_rt(Db,an);
+			//g0n = var.get_g0n();
+			ready = var.get_ready();
+			System.out.println("["+i+"]ruido0n/ready: "+ruido0n+" "+ready);
+		}
+
+		for (int i=100;i<200;i++){
+
+			Db = 1;
+
+			an.SetValue(0,0,10);
+			an.SetValue(0,1,10);
+			an.SetValue(0,2,10);
+
+			ruido0n = var.r_pausa_rt(Db,an);
+			//g0n = var.get_g0n();
+			ready = var.get_ready();
+			System.out.println("["+i+"]ruido0n/ready: "+ruido0n+" "+ready);
+		}
+
+		for (int i=200;i<250;i++){
+
+			Db = 0;
+
+			an.SetValue(0,0,15);
+			an.SetValue(0,1,15);
+			an.SetValue(0,2,15);
+
+			ruido0n = var.r_pausa_rt(Db,an);
+			//g0n = var.get_g0n();
+			ready = var.get_ready();
+			System.out.println("["+i+"]ruido0n/ready: "+ruido0n+" "+ready);
+
+		
+		}
+
+		for (int i=250;i<320;i++){
+
+			Db = 1;
+
+			an.SetValue(0,0,20);
+			an.SetValue(0,1,20);
+			an.SetValue(0,2,20);
+
+			ruido0n = var.r_pausa_rt(Db,an);
+			//g0n = var.get_g0n();
+			ready = var.get_ready();
+			System.out.println("["+i+"]ruido0n/ready: "+ruido0n+" "+ready);
+		}
+
+		for (int i=320;i<350;i++){
+
+			Db = 0;
+
+			an.SetValue(0,0,15);
+			an.SetValue(0,1,15);
+			an.SetValue(0,2,15);
+
+			ruido0n = var.r_pausa_rt(Db,an);
+			//g0n = var.get_g0n();
+			ready = var.get_ready();
+			System.out.println("["+i+"]ruido0n/ready: "+ruido0n+" "+ready);
+
+		
+		}
+
+
+	
+	}
 
 
 }

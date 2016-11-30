@@ -52,16 +52,22 @@ public class matriz_transf_rt {
 
 	}	
 
-	public void matriz_r(double w[], double dt) {
+	//w: input signal  [1x3]
+    //dt: input time interval [1x1]
+    //return :::
+    //R: Matriz de transformação [3x3]
+
+
+	public void matriz_r(PdsMatrix w, double dt) {
         
-		this.mod_w = Math.sqrt((w[0]*w[0])+(w[1]*w[1])+(w[2]*w[2]));
+		this.mod_w = Math.sqrt((w.GetValue(0,0)*w.GetValue(0,0))+(w.GetValue(0,1)*w.GetValue(0,1))+(w.GetValue(0,2)*w.GetValue(0,2)));
 
 		if(this.mod_w>0)
 		{
                 
-                this.ew[0] = w[0]/(this.mod_w); %ewx
-                this.ew[1] = w[1]/(this.mod_w); %ewy
-                this.ew[2] = w[2]/(this.mod_w); %ewz
+                this.ew[0] = w.GetValue(0,0)/(this.mod_w); //ewx
+                this.ew[1] = w.GetValue(0,1)/(this.mod_w); //ewy
+                this.ew[2] = w.GetValue(0,2)/(this.mod_w); //ewz
             
                        
             //Obter theta
@@ -127,7 +133,9 @@ public class matriz_transf_rt {
     }
 
 
-	public double[][] matriz_transf(int DB) { 
+	public PdsMatrix matriz_transf(double DB, PdsMatrix w, double dt) { 
+
+		this.matriz_r(w,dt);
 
 		if(DB==1)
 		{
@@ -168,6 +176,51 @@ public class matriz_transf_rt {
 	
 		return(M);
 
+	}
+
+
+	public static void main(String[] args) {
+
+		matriz_transf_rt var = new matriz_transf_rt();
+
+		PdsMatrix w = new PdsMatrix(1,3);
+		PdsMatrix M = new PdsMatrix(3,3);
+		
+		double dt = 0.1;
+
+		double Db = 0;
+
+		
+		
+		for (int i=0;i<3;i++){
+
+			Db = 1;
+
+			w.SetValue(0,0,15);
+			w.SetValue(0,1,15);
+			w.SetValue(0,2,15);
+			
+			M = var.matriz_transf(Db,w,dt);
+			
+			System.out.println("["+i+"]M: "+M);
+		}
+
+		
+		for (int i=3;i<6;i++){
+
+			Db = 0;
+
+			w.SetValue(0,0,5);
+			w.SetValue(0,1,5);
+			w.SetValue(0,2,5);
+		
+			
+			M = var.matriz_transf(Db,w,dt);
+			
+			System.out.println("["+i+"]M: "+M);
+		}
+
+			
 	}
    	
 
