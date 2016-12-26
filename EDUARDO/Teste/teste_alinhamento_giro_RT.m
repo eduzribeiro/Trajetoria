@@ -5,7 +5,7 @@ clc
 
 %Carregar dados
 
-dados = load('..\data\slide6.txt');
+dados = load('..\data\slide4.txt');
 
 %Separar colunas
 
@@ -46,7 +46,7 @@ end
 
 %Classes
 
-S = setup(1000);
+S = setup(1500);
 
 MA = matriz_transf_rt;
 
@@ -113,8 +113,8 @@ plot(Sx,Sy,'-o')
 xlabel('x')
 ylabel('y')
 title('Deslocamento (m)')
-xlim([-0.1 0.65]);
-ylim([-0.1 0.65]);
+% xlim([-0.1 0.65]);
+% ylim([-0.1 0.65]);
 
 figure(2)
 plot3(Sx,Sy,Sz,Sx(end),Sy(end),Sz(end),'o')
@@ -124,8 +124,8 @@ ylabel('Y (m)');
 zlabel('Z (m)');
 MAX=max([Sx Sy Sz]);
 MIN=min([Sx Sy Sz]);
-xlim([-0.1 0.65]);
-ylim([-0.1 0.65]);
+% xlim([-0.1 0.65]);
+% ylim([-0.1 0.65]);
 %zlim([MIN MAX]);
 
 figure(3)

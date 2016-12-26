@@ -1,5 +1,5 @@
-javac -classpath . Ler.java
+javac -classpath . detectordepausa_rt.java
 
-java -classpath . Ler    > logfile.txt
+java -classpath . detectordepausa_rt  > logfile.txt  
 pause
 

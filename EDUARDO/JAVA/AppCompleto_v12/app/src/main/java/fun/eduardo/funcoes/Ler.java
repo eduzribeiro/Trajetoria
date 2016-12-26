@@ -1,3 +1,5 @@
+package fun.eduardo.funcoes;
+
 import net.trucomanx.pdsplibj.pdsextras.*;
 
 public class Ler{
@@ -99,30 +101,7 @@ public class Ler{
 
 
 
-	public static void main(String[] args) {
-
-		Ler var = new Ler("C:\\Users\\Eduardo\\Desktop\\Diversos\\UFLA\\Mestrado\\Trajetoria\\EDUARDO\\data\\TestClass.txt");
-
-		double Time,Ax,Ay,Az,Wx,Wy,Wz;
-
-			for(int i=0;i<4;i++)
-			{
-
-			Time = var.LerTime();
-			Ax = var.LerAx();
-			Ay = var.LerAy();
-			Az = var.LerAz();
-			Wx = var.LerWx();
-			Wy = var.LerWy();
-			Wz = var.LerWz();
-			var.Descarte();
-			
-		
-			System.out.println("Time/Ax/Ay/Az/Wx/Wy/Wz: "+Time+" "+Ax+" "+Ay+" "+Az+" "+Wx+" "+Wy+" "+Wz);
-			
-			}
-
-	}
+	
 	
 }
 
