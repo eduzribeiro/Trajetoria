@@ -104,6 +104,7 @@ public class PdsReadData{
 
 	/**
 	 * Esta função lee uma linha do arquivo aberto em modo leitura.
+	 * retorna null si no existe linea.
 	 *
 	 * <br>
 	 * @return A linha lida.
@@ -111,6 +112,11 @@ public class PdsReadData{
 	public String Scan(){
 		String cadena=null;
 		
+		if ((this.scan.hasNextLine()) == false)
+		{
+			return null;
+		}
+
 		try{
 			cadena=this.scan.nextLine();
 		}
@@ -178,5 +184,6 @@ public class PdsReadData{
 			e.printStackTrace();
 		}
 	}
-    
+
+   
 }

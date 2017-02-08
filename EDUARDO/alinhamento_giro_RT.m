@@ -5,7 +5,7 @@ clc
 
 %Carregar dados
 
-dados = load('..\data\yurei7.txt');
+dados = load('C:\Users\Eduardo\Desktop\Diversos\UFLA\Mestrado\Trajetoria\EDUARDO\data\slide4.txt');
 
 %Separar colunas
 
@@ -18,7 +18,9 @@ wr = dados(:,5:7); % Girômetro
 
 %Variáveis
 
-Db = 0;
+%Db = zeros(1,size(dados,1));
+
+Db(1) = 0;
 
 % ruido0 = zeros(size(ar(:,1)));
 % a = zeros(size(ar));
@@ -46,7 +48,7 @@ end
 
 %Classes
 
-S = setup;
+S = setup(1000);
 
 MA = matriz_transf_rt;
 
@@ -82,7 +84,7 @@ for II=1:max(size(ar))
        
     %Calcular e decidir ruido
     
-    ruido_d(II) = DER.decide_r_rt(a_n(II,:),ruido0(II,:),Db)
+    ruido_d(II) = DER.decide_r_rt(a_n(II,:),ruido0(II),Db);
     
     %Detector de pausa
     
@@ -94,6 +96,14 @@ for II=1:max(size(ar))
 		
 
 end
+
+figure(1)
+plot(Sx,Sy,Sx(end),Sy(end),'o')
+grid on
+xlabel('X (m)');
+ylabel('Y (m)');
+
+
 
 
 

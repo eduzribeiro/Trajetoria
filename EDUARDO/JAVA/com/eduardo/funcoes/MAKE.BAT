@@ -1,5 +1,5 @@
-javac -classpath . detectordepausa_rt.java
+javac -classpath . geraMatriz.java
 
-java -classpath . detectordepausa_rt  > logfile.txt  
+java -classpath . geraMatriz  > logfile.txt  
 pause
 
