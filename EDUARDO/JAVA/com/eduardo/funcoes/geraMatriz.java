@@ -31,6 +31,12 @@ public class geraMatriz {
 
 		this.M = sizeMax - 1;
 
+		for(int y = 0; y<sizeMax; y++){
+        	for(int x = 0; x<sizeMax; x++){
+        	    this.A[y][x]=247255255;
+        	}
+    	}
+
 		
 	}	
 
@@ -63,7 +69,7 @@ public class geraMatriz {
 
 			System.out.println("["+i+"]posX2: "+this.posX2+"posY2: "+this.posY2);
 
-			this.A[this.posX2][this.posY2] = 255;					
+			this.A[this.posX2][this.posY2] = 0;					
 
 			i++;
 		}
