@@ -1,5 +1,5 @@
-javac -classpath . geraMatriz.java
+javac -classpath . geraDados.java 
 
-java -classpath . geraMatriz  > logfile.txt  
+java -classpath . geraDados  > logfile.txt  
 pause
 

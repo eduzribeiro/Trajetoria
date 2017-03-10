@@ -207,6 +207,49 @@ public class PdsMatrix {
 	}
 
 	/**
+	 * alpha*Row[i]+beta*Row[j]-->Row[j]
+	 * <br>
+	 * 
+	 * @param i Primeira linha a somar.
+	 * @param j Segunda linha a somar e a que var receber os dados.
+	 * @param alpha Multiplicador da primeira linha a somar.
+	 * @param beta Multiplicador da segunda linha a somar.
+	 **/
+	public void AddRows(int i,int j,double alpha,double beta) {
+
+        for(int c=0;c<this.Ncol;c++)
+            this.M[j][c] = alpha*this.M[i][c]+beta*this.M[j][c];
+	}
+
+	/**
+     * Intercambia a linha id com qualquer linha inferior que tenha um valor
+     * diferente de 0 na coluna id, solo si necesario.
+	 * 
+	 * @param id linha a analizar.
+     * @return Retorna false si no es posivel fazer o elemento da linha id coluna 
+     * id, diferente de cero, por nenhum tipo de intercambio. Caso contrario retorna
+     * true.
+	 **/
+    private boolean swap_row_of_the_diagonal_element_with_the_first_above_non_zero(int id){
+        
+        if  (this.M[id][id]==0)
+        {
+            for(int i=id+1;i<this.Nlin;i++)
+            {
+                if(this.M[i][id]!=0)
+                {
+                    this.SwapRows(id,i);
+                    return true;
+                }
+                    
+            }
+            return false;
+        }
+
+        return true;  
+    }
+
+	/**
 	 * Este método multiplica uma matriz M com a matriz MatSrc e retorna 
 	 * uma nova matriz.
 	 * <br>
@@ -243,6 +286,35 @@ public class PdsMatrix {
 	}
 
 
+
+
+
+	public PdsVector MulNewVector(PdsVector MatSrc) {
+		PdsMatrix	Mat=this;
+		PdsVector	Mout=null;
+		int N;
+		
+		if( MatSrc==null )				return null;
+		if( Mat.Ncol != MatSrc.GetNelements() )	return null;
+		
+		N=Mat.Ncol;
+		
+		Mout=new PdsVector(Mat.Nlin);
+		if(Mout==null)	return null;
+				
+		for(int i=0;i<Mat.Nlin;i++)	
+		{
+				Mout.SetValue(i,0);
+				for(int k=0;k<N;k++)
+				{
+					double val = Mout.GetValue(i)+Mat.M[i][k]*MatSrc.GetValue(k);					
+					Mout.SetValue(i,val);
+				}
+		}
+		return Mout;
+	}
+
+
 	/**
 	 * Este método retorna a transposta de uma matriz M.
 	 * <br>
@@ -252,6 +324,7 @@ public class PdsMatrix {
 	public PdsMatrix TransposeNew() {
         
         PdsMatrix Mout = new PdsMatrix(this.Ncol, this.Nlin);
+        boolean b;
         
         if(Mout==null)	return null;
         
@@ -260,6 +333,109 @@ public class PdsMatrix {
                 Mout.M[j][i] = this.M[i][j];
         return Mout;
 	}
+
+	/**
+	 * Realiza uma eliminação Gauss-Jordam sobre a matriz.
+	 *
+	 * @return Retorna true se foi possivel fazer a eliminação gauss jordam a 
+     * todas as linhas, em caso contrario retorna false e a matriz é alterada
+     * ate onde foi possivel.
+	 * */
+	public boolean GaussianElimination() {
+        boolean b;
+        for (int lin = 0; lin < this.Nlin; lin++)
+        {
+            // garantizo que el valor de la diagonal no es cero
+            b=this.swap_row_of_the_diagonal_element_with_the_first_above_non_zero(lin);
+            if(b==false)    return false;
+    
+            // normalizo el valor de la diagonal a uno.
+            b=this.adjust_row_of_the_diagonal_element_with_the_value(lin,1.0);
+            if(b==false)    return false;
+
+            for (int j = lin+1; j < this.Nlin; j++)
+            {
+                this.AddRows(lin,j,-this.M[j][lin],1.0);
+            }
+
+        }   
+
+        return true;
+
+    }
+
+	/**
+	 * retorna a inversa da matriz numa nova matriz.
+	 *
+	 * @return Retorna uma nova matriz com a inversa.
+	 * */
+	public PdsMatrix InverseNew() {
+
+        if(this.Nlin!=this.Ncol)    return null;
+
+
+        PdsMatrix Mext = new PdsMatrix(this.Nlin, 2*this.Ncol);
+
+        PdsMatrix Minv = new PdsMatrix(this.Nlin, this.Ncol);
+        boolean b;
+        
+        if(Mext==null)	return null;
+                
+        //creando matriz composta {M I}
+        for (int i = 0; i < this.Nlin; i++)
+        {
+            for (int j = 0; j < this.Ncol; j++)
+            {
+                Mext.M[i][j] = this.M[i][j];
+            }
+            Mext.M[i][this.Ncol+i]=1.0;
+        }
+
+        //haciendo matriz escalonada
+        b=Mext.GaussianElimination();
+        if(b==false)    return null;
+
+         //limpando a diagonal superior.
+        for (int i = this.Nlin-1; i >=0; i--)
+        {
+            for(int j=0;j<i;j++)
+            Mext.AddRows(i,j,-Mext.M[j][i],1.0);
+        }       
+
+        //pegando dados finais
+        for (int i = 0; i < this.Nlin; i++)
+        {
+            for (int j = 0; j < this.Ncol; j++)
+            {
+                Minv.M[i][j] = Mext.M[i][this.Ncol+j];
+            }
+        }
+        return Minv;
+	}
+
+	/**
+	 * Multiplica todos os valor da linha id, de modo que el elemento da columna
+     * id tenha um valor igual a val.
+	 *
+     * @param id Linha a analizar.
+     * @param val valor que debe ter o elemento da lina id e coluna id.
+	 * @return Retorna true si foi possivel ajustar a linha.
+	 * */
+    private boolean adjust_row_of_the_diagonal_element_with_the_value(int id,double val) {
+
+        if(this.M[id][id]==0)   return false;
+        if(id>=this.Ncol)   return false;
+        if(id>=this.Nlin)   return false;
+
+        double v=this.M[id][id];
+
+        for(int i=0;i<this.Ncol;i++)
+        {
+            this.M[id][i]=this.M[id][i]/v;
+        }
+
+        return true;
+    }
 
 	/**
 	 * Este método provoca que se usamos uma instância de PdsMatrix

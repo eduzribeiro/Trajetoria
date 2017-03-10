@@ -5,7 +5,7 @@ clc
 
 %Carregar dados
 
-dados = load('..\data\slide5.txt');
+dados = load('..\data\FILTERslide4.txt');
 
 %Separar colunas
 
@@ -128,8 +128,8 @@ ylabel('y')
 title('Deslocamento (m)')
 MAX=max(max([Sx Sy]));
 MIN=min(min([Sx Sy]));
-xlim([MIN MAX]);
-ylim([MIN MAX]);
+%xlim([MIN MAX]);
+%ylim([MIN MAX]);
 
 figure(2)
 plot3(Sx,Sy,Sz,Sx(end),Sy(end),Sz(end),'o')
