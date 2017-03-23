@@ -14,7 +14,7 @@ public class geraDadosFiltradosKalman{
 		double t2,X2,Y2,Z2,GX2,GY2,GZ2,XF,YF,ZF,GXF,GYF,GZF;
 		PdsReadData R;
 		PdsWriteData W;
-		PdsKalman1D filtro;
+		PdsKalman1D filtroX,filtroY,filtroZ,filtroGX,filtroGY,filtroGZ;
 		
 
 
@@ -24,8 +24,14 @@ public class geraDadosFiltradosKalman{
 		this.PathDestino = path2;
 		this.R = new PdsReadData(this.Path);		
 		this.W = new PdsWriteData(this.PathDestino);
-		this.filtro = new PdsKalman1D(0.5,1.0,1.0,0.02);
+		
+		this.filtroX = new PdsKalman1D(0.98,1.0,0.08,0.2);
+		this.filtroY = new PdsKalman1D(0.98,1.0,0.1,0.1);
+		this.filtroZ = new PdsKalman1D(0.98,1.0,0.08,0.2);
 
+		this.filtroGX = new PdsKalman1D(0.98,1.0,0.1,0.1);
+		this.filtroGY = new PdsKalman1D(0.98,1.0,0.1,0.1);
+		this.filtroGZ = new PdsKalman1D(0.98,1.0,0.1,0.1);
 
 		SaveFilterData();
 		
@@ -59,14 +65,13 @@ public class geraDadosFiltradosKalman{
 			this.GZ2 = scanner.nextDouble();
 
 			//System.out.println(j+" GZ2: "+this.GZ2);
-			
-			this.XF = filtro.EvaluateValue(this.X2);
-			this.YF = filtro.EvaluateValue(this.Y2);
-			this.ZF = filtro.EvaluateValue(this.Z2);
+			this.XF = filtroX.EvaluateValue(this.X2);
+			this.YF = filtroY.EvaluateValue(this.Y2);
+			this.ZF = filtroZ.EvaluateValue(this.Z2);
 
-			this.GXF = filtro.EvaluateValue(this.GX2);
-			this.GYF = filtro.EvaluateValue(this.GY2);
-			this.GZF = filtro.EvaluateValue(this.GZ2);
+			this.GXF = filtroGX.EvaluateValue(this.GX2);
+			this.GYF = filtroGY.EvaluateValue(this.GY2);
+			this.GZF = filtroGZ.EvaluateValue(this.GZ2);
 
 			//System.out.println(j+" XF: "+this.XF);
 

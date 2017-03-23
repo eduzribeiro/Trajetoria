@@ -70,6 +70,8 @@ public class PdsKalman1D {
 	private double H;
 	private double Q;
 	private double R;
+
+	private int count;
 	
 	PdsGaussian G=null;
 
@@ -107,6 +109,8 @@ public class PdsKalman1D {
 		this.H=H;
 		this.Q=Q;
 		this.R=R;
+
+		this.count=0;
 		
 		this.G=new PdsGaussian(0,Math.sqrt(Q));
 		
@@ -143,6 +147,8 @@ public class PdsKalman1D {
 		this.H=1.0;
 		this.Q=1.0;
 		this.R=1.0;
+
+		this.count=0;
 		
 		this.G=new PdsGaussian(0,Math.sqrt(Q));
 		
@@ -169,11 +175,18 @@ public class PdsKalman1D {
 		double K;
 
 		double UNow;
-
-		UNow=G.GetValue();
-
+		
 		//Prediction
-		Xminus=this.A*this.X+ UNow;
+		if(this.count==0)
+		{
+			Xminus=ZNow;
+		}
+		else
+		{
+			UNow=G.GetValue();
+			Xminus=this.A*this.X+ UNow;
+		}
+		this.count++;
 		Pminus=this.A*this.P*this.A+this.Q;
 
 		//Correction
@@ -181,7 +194,7 @@ public class PdsKalman1D {
 		
 		this.X = Xminus + K*(ZNow-this.H*Xminus);
 		this.P = (1.0 - K*this.H)*Pminus;
-
+		//System.out.println("x:"+X+"\txminus:"+Xminus+"\n");
 		return this.X;
 	}
 

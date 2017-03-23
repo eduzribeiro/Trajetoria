@@ -12,16 +12,16 @@ classdef detectordepausa_inicio < handle
    methods
    % Construtor inializador do objeto
    % inival: inicia todas as variaveis
-        function obj =detectordepausa_inicio
+        function obj =detectordepausa_inicio(KFactor)
 
             obj.alfa = 1.5;
             obj.Db2 = 0;
             
-            HMA=ones(1,20);
+            HMA=ones(1,20*KFactor);
             HMA=HMA/sum(HMA);
             obj.FM=FiltroIIR(HMA,1);
             
-            HMA2=ones(1,20);
+            HMA2=ones(1,20*KFactor);
             HMA2=HMA2/sum(HMA2);
             obj.FM2=FiltroIIR(HMA2,1);
         

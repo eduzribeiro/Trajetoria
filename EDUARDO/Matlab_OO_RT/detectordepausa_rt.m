@@ -32,7 +32,7 @@ classdef detectordepausa_rt < handle
    end
    methods
        %Construtor inializador do objeto  
-        function obj = detectordepausa_rt
+        function obj = detectordepausa_rt(KFactor)
         
             obj.fator = 3;
             obj.U = 0.3;
@@ -49,17 +49,17 @@ classdef detectordepausa_rt < handle
             obj.Dma = 0;
             
             
-            P=13;
+            P=13*KFactor;
             H=fir1(4*P,1/P,'high');
             G=1;
             %[H,G] = cheby2(4,60,1/1000,'high');
             obj.F=FiltroIIR(H,G);
             
-            HM=ones(1,50);
+            HM=ones(1,50*KFactor);
             HM=HM/sum(HM);
             obj.FM=FiltroIIR(HM,1);
             
-            P = 20;
+            P = 20*KFactor;
             H1 = fir1(4*P,1/P,'low');
             obj.FF=FiltroIIR(H1,1);
             

@@ -20,7 +20,7 @@ public class geraDados {
 
 	public geraDados(String path, String path2){
 
-		int N = 32;
+		int N = 8;
 
 		this.Sx = new PdsSpline(N);
 		this.Sy = new PdsSpline(N);
@@ -100,7 +100,6 @@ public class geraDados {
 				System.out.println(TMP);
 
 			}
-			if(j>1)	System.out.println("\n");
 			j++;
 		}
 	}
@@ -110,10 +109,10 @@ public class geraDados {
 	public static void main(String[] args) {
 
 		
-		geraDados var = new geraDados("C:\\Users\\Eduardo\\Desktop\\Diversos\\UFLA\\Mestrado\\Trajetoria\\EDUARDO\\data\\pausa-quedalivre-pausa.txt","C:\\Users\\Eduardo\\Desktop\\Diversos\\UFLA\\Mestrado\\Trajetoria\\EDUARDO\\data\\SPLINEpausa-quedalivre-pausa.txt");
+		geraDados var = new geraDados("C:\\Users\\Eduardo\\Desktop\\Diversos\\UFLA\\Mestrado\\Trajetoria\\EDUARDO\\data\\Resultados - Originnal - Spline - Kalman\\PausaInicial\\pausa-inicial.txt","C:\\Users\\Eduardo\\Desktop\\Diversos\\UFLA\\Mestrado\\Trajetoria\\EDUARDO\\data\\SPLINEpausa-quedalivre-pausa.txt");
 
 		
-							
+						
 	
 	}
 

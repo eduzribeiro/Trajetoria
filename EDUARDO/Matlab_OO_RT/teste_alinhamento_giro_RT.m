@@ -5,7 +5,7 @@ clc
 
 %Carregar dados
 
-dados = load('..\data\slide5.txt');
+dados = load('C:\Users\Eduardo\Desktop\Diversos\UFLA\Mestrado\Trajetoria\EDUARDO\JAVA\com\eduardo\funcoes\logfile.txt');
 
 %Separar colunas
 
@@ -46,7 +46,7 @@ end
 
 %Classes
 
-S = setup(1500);
+S = setup(1000);
 
 MA = matriz_transf_rt;
 
@@ -54,9 +54,9 @@ DEG = decide_g;
 
 DER = decide_r;
 
-DETEC = detectordepausa_rt;
+DETEC = detectordepausa_rt(1);
 
-DETEC2 = detectordepausa_inicio;
+DETEC2 = detectordepausa_inicio(1);
 
 INT = Integrador(0);
 
@@ -123,8 +123,8 @@ b = [1:max(size(a))];
 
 figure(1) 
 plot(Sx,Sy,'-o')
-xlabel('x')
-ylabel('y')
+xlabel('X (m)')
+ylabel('Y (m)')
 title('Deslocamento (m)')
 MAX=max(max([Sx Sy]));
 MIN=min(min([Sx Sy]));
@@ -137,6 +137,7 @@ grid on
 xlabel('X (m)');
 ylabel('Y (m)');
 zlabel('Z (m)');
+title('Deslocamento (m)')
 MAX=max([Sx Sy Sz]);
 MIN=min([Sx Sy Sz]);
 % xlim([-0.1 0.65]);
@@ -144,12 +145,16 @@ MIN=min([Sx Sy Sz]);
 %zlim([MIN MAX]);
 
 figure(3)
-plot(b,a_n2(:,1),b,a_n2(:,2),b,a_n2(:,3),b,Db2,b,Db3*2,b,DbDecidido2*3)%,b,DSA,'-o',b,DSP*1.5,'-s',b,ruido_d*3)
-legend('x2','y2','z2','Db','Db2')%,'Dsa','Dsp','ruido')
+plot(b,a_n2(:,1),'-o',b,a_n2(:,2),'-o',b,a_n2(:,3),'-o',b,Db2,b,Db3*2,b,DbDecidido2*3)%,b,DSA,'-o',b,DSP*1.5,'-s',b,ruido_d*3)
+title('Comportamento aceleração (m/s^2)')
+legend('X','Y','Z','Db','DbInicio','DbDecidido')%,'Dsa','Dsp','ruido')
 
 figure(4)
 plot(b,VX,b,VY,b,VZ)
+title('Velocidade (m/s)')
 grid on
+xlabel('Amostra');
+ylabel('Velocidade');
 legend('Vx','Vy','Vz')
 
 rmpath('..\')
