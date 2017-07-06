@@ -58,7 +58,7 @@ public class geraDadosKalman {
 			this.GY = scanner.nextDouble();
 			this.GZ = scanner.nextDouble();
 			
-			int N = 4;
+			int N = 8;
 
 			if (j == 0) {
 

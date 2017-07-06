@@ -2,7 +2,8 @@
 L=240;
 
 
-A = imread('trajetoria7.bmp');
+A = imread('trajetoria12.bmp');
+
 
 [iTotal jTotal] = size(A);
 
@@ -13,37 +14,35 @@ for II=1:jTotal
     
     X(II)= II;
     
-    T(II)=100*(II)^0.4;
-    
 end
 
 % Px = polyfit(T,X,11);
 % 
-% Py = polyfit(T,Y,11);
+%Py = polyfit(X,Y,22);
 % 
 % X = polyval(Px,T);
 % 
-% Y = polyval(Py,T);
+%Y = polyval(Py,X);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%X = smooth(X,L,'loess')';
+L=20;
+h=fir1(L,0.1);
+Y=filter(h,1,Y);
 
-X = smooth(X,L,'loess')';
+%Y = smooth(Y,0.1,'loess'); %  Y=Y-min(Y);
+%Y = fit(X,Y,'smoothingspline');
+for II=1:jTotal    
+    T(II)=100*(II)^0.7;
+end
 
-Y = smooth(Y,L,'loess')';
 
 figure(1)
 plot(T,X,'-s',T,Y,'-o')
+legend('X','Y')
 title('Distância x Tempo')
 
-% X = 0 : .1 : 4*pi;
-% 
-% Y = sin(X);
-% 
-% plot(X,Y,'r')
-% 
-% title('Gráficos - Teste 02')
-% 
-% xlabel('t')
-% 
-% ylabel('sent')
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Vx = zeros(size(X));
 Vy = zeros(size(Y));
@@ -58,11 +57,13 @@ for II=2:jTotal
 end
 
  figure(2)
- plot(T,Vx,'-o',T,Vy,'-o')
+ plot(T,Vx,'-s',T,Vy,'-o')
+ legend('X','Y')
  title('Velocidade')
-
-ax = zeros(size(X));
-ay = zeros(size(Y));
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ax = zeros(size(Vx));
+ay = zeros(size(Vy));
 
 for II=2:jTotal
     
@@ -73,16 +74,24 @@ for II=2:jTotal
     
 end
 
- figure(3)
- plot(T,ax,'-o',T,ay,'-o')
- title('Aceleração')
 
+ figure(3)
+ plot(T,ax,'-s',T,ay,'-o');
+ legend('X','Y')
+ title('Aceleração')
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Dados = [T' ax' ay' 0*ax' zeros(size(ax,2),9)];
 
-save('Dados.txt','Dados','-ascii')
+save('Dados12.txt','Dados','-ascii')
 
 figure(4)
 plot(X,Y,'-o')
 %xlim([400 1000])
+grid on
 
+figure(5)
+ plot(X,ax,'-s',X,ay,'-o');
+ legend('X','Y')
+ title('Aceleração')
 
+save('originais.mat','ax','ay','T','X');

@@ -27,7 +27,7 @@ public class geraDadosFiltradosKalman{
 		
 		this.filtroX = new PdsKalman1D(0.98,1.0,0.08,0.2);
 		this.filtroY = new PdsKalman1D(0.98,1.0,0.1,0.1);
-		this.filtroZ = new PdsKalman1D(0.98,1.0,0.08,0.2);
+		this.filtroZ = new PdsKalman1D(0.98,1.0,0.1,1.4);
 
 		this.filtroGX = new PdsKalman1D(0.98,1.0,0.1,0.1);
 		this.filtroGY = new PdsKalman1D(0.98,1.0,0.1,0.1);

@@ -1,5 +1,4 @@
-javac -classpath . geraDadosFiltradosKalman.java 
+javac -classpath . geraDados.java 
 
-java -classpath . geraDadosFiltradosKalman  > logfile.txt  
+java -classpath . geraDados  > logfile.txt  
 pause
-

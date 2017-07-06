@@ -109,7 +109,7 @@ public class geraDados {
 	public static void main(String[] args) {
 
 		
-		geraDados var = new geraDados("C:\\Users\\Eduardo\\Desktop\\Diversos\\UFLA\\Mestrado\\Trajetoria\\EDUARDO\\data\\Resultados - Originnal - Spline - Kalman\\PausaInicial\\pausa-inicial.txt","C:\\Users\\Eduardo\\Desktop\\Diversos\\UFLA\\Mestrado\\Trajetoria\\EDUARDO\\data\\SPLINEpausa-quedalivre-pausa.txt");
+		geraDados var = new geraDados("C:\\Users\\Eduardo\\Desktop\\Diversos\\UFLA\\Mestrado\\Trajetoria\\EDUARDO\\Legado\\logfile_2.txt","C:\\Users\\Eduardo\\Desktop\\Diversos\\UFLA\\Mestrado\\Arquivos paper\\Paper 2\\SPLINElogfile_2.txt");
 
 		
 						

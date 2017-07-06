@@ -1,16 +1,19 @@
 addpath('..\')
 
-clear
+clear all
+close all
 clc
 
 %Carregar dados
 
 dados = load('C:\Users\Eduardo\Desktop\Diversos\UFLA\Mestrado\Trajetoria\EDUARDO\JAVA\com\eduardo\funcoes\logfile.txt');
 
+ACC = load('C:\Users\Eduardo\Desktop\Diversos\UFLA\Mestrado\Trajetoria\EDUARDO\Legado\originais.mat');
+
 %Separar colunas
 
 t = dados(:,1); % Tempo 
-t(:)=t(:)-t(1);
+%t(:)=t(:)-t(1);
 
 ar = dados(:,2:4); % Acelerômetro
 
@@ -46,7 +49,7 @@ end
 
 %Classes
 
-S = setup(1000);
+S = setup(1);
 
 MA = matriz_transf_rt;
 
@@ -122,14 +125,18 @@ end
 b = [1:max(size(a))];
 
 figure(1) 
-plot(Sx,Sy,'-o')
+plot(Sx,Sy)
 xlabel('X (m)')
 ylabel('Y (m)')
 title('Deslocamento (m)')
-MAX=max(max([Sx Sy]));
-MIN=min(min([Sx Sy]));
-xlim([MIN MAX]);
-ylim([MIN MAX]);
+% MAX=max(max([Sx Sy]));
+% MIN=min(min([Sx Sy]));
+% xlim([MIN MAX]);
+% ylim([MIN MAX]);
+grid on
+%xlim([-0.7 0.7]);
+%ylim([-0.7 0.7]);
+
 
 figure(2)
 plot3(Sx,Sy,Sz,Sx(end),Sy(end),Sz(end),'o')
@@ -138,16 +145,18 @@ xlabel('X (m)');
 ylabel('Y (m)');
 zlabel('Z (m)');
 title('Deslocamento (m)')
-MAX=max([Sx Sy Sz]);
-MIN=min([Sx Sy Sz]);
-% xlim([-0.1 0.65]);
-% ylim([-0.1 0.65]);
-%zlim([MIN MAX]);
+MAX=max(max([Sx Sy Sz]));
+MIN=min(min([Sx Sy Sz]));
+xlim([MIN MAX]);
+ylim([MIN MAX]);
+zlim([MIN MAX]);
 
 figure(3)
-plot(b,a_n2(:,1),'-o',b,a_n2(:,2),'-o',b,a_n2(:,3),'-o',b,Db2,b,Db3*2,b,DbDecidido2*3)%,b,DSA,'-o',b,DSP*1.5,'-s',b,ruido_d*3)
+plot(t,a_n2(:,1),'-o',t,a_n2(:,2),'-o',t,a_n2(:,3),'-<',ACC.T,ACC.ay,'->');%,b,DbDecidido2*3,'k');%,'-o',b,Db2,b,Db3*2,b,DbDecidido2*3)%,b,DSA,'-o',b,DSP*1.5,'-s',b,ruido_d*3)
 title('Comportamento aceleração (m/s^2)')
 legend('X','Y','Z','Db','DbInicio','DbDecidido')%,'Dsa','Dsp','ruido')
+xlabel('Amostra');
+ylabel('Aceleração');
 
 figure(4)
 plot(b,VX,b,VY,b,VZ)
@@ -156,6 +165,25 @@ grid on
 xlabel('Amostra');
 ylabel('Velocidade');
 legend('Vx','Vy','Vz')
+
+% SxD = Sx(1082:1175);
+% SyD = Sy(1082:1175);
+% SzD = Sz(1082:1175);
+% 
+% figure(5)
+% plot3(SxD,SyD,SzD);
+% grid on
+% xlabel('X (m)');
+% ylabel('Y (m)');
+% zlabel('Z (m)');
+% title('Deslocamento (m)')
+% MAX=max(max([SxD SyD SzD]));
+% MIN=min(min([SxD SyD SzD]));
+% xlim([MIN MAX]);
+% ylim([MIN MAX]);
+% zlim([MIN MAX]);
+
+
 
 rmpath('..\')
 

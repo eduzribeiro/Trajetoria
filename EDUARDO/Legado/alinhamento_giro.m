@@ -4,18 +4,20 @@ clear all
 close all
 clc
 
-bias = 1500;
+bias = 1;
 
 %% Carregar dados
 
-h = dados_novos('..\data\slide4.txt','Dados2.txt',1,1);
+h = dados_novos('C:\Users\Eduardo\Desktop\Nova pasta\original.txt','logfile_2.txt',8,1);
 
-dados = load('Dados2.txt');
+dados = load('logfile_2.txt');
 %dados=dados(1:310,:);
 %% Separar colunas
 
+ACC = load('C:\Users\Eduardo\Desktop\Diversos\UFLA\Mestrado\Trajetoria\EDUARDO\Legado\originais.mat');
+
 t = dados(:,1); % Tempo 
-t(:)=t(:)-t(1);
+%t(:)=t(:)-t(1);
 
 a = dados(:,2:4); % Acelerômetro
 
@@ -42,7 +44,7 @@ w = dados(:,5:7); % Girômetro
 %  
 %w=filtrado_hp(w);
 
-g = -dados(:,8:10); % -(Sensor de gravidade)
+%g = -dados(:,8:10); % -(Sensor de gravidade)
 
 
 %----------------------------------------------------------------------
@@ -58,7 +60,7 @@ dt(1) = 0;
 R=cell(1,iTotal);
 
 M=eye(3);
-g_n=zeros(size(g));
+%g_n=zeros(size(g));
 a_n=zeros(size(a));
 %g_n2=zeros(size(g));
 R{1}=zeros(3,3);
@@ -107,7 +109,7 @@ for II=1:iTotal
     
    % Error = mean2(abs(M*M'- eye(3)))
    
-     g_n(II,:) = (M*g(II,:)')';
+     %g_n(II,:) = (M*g(II,:)')';
      a_n(II,:) = (M*a(II,:)')';
      
 end
@@ -115,30 +117,30 @@ end
 
  %% Gráficos dados gravidade
  
-figure(1)
-plot(v,g(:,1),'-s',v,g(:,2),'-p',v,g(:,3),'-o');
-title('Gravidade original')
-legend('X','Y','Z')
-xlabel('Amostras')
-ylabel('Aceleração(m/s²)')
-ylim([-10,3]);
+% figure(1)
+% plot(v,g(:,1),'-s',v,g(:,2),'-p',v,g(:,3),'-o');
+% title('Gravidade original')
+% legend('X','Y','Z')
+% xlabel('Amostras')
+% ylabel('Aceleração(m/s²)')
+% ylim([-10,3]);
 
-figure(2)
-plot(v,g_n(:,1),'-s',v,g_n(:,2),'-p',v,g_n(:,3),'-o');
-title('Gravidade alinhada')
-legend('X','Y','Z')
-xlabel('Amostras')
-ylabel('Aceleração(m/s²)')
-ylim([-10,3]);
+% figure(2)
+% plot(v,g_n(:,1),'-s',v,g_n(:,2),'-p',v,g_n(:,3),'-o');
+% title('Gravidade alinhada')
+% legend('X','Y','Z')
+% xlabel('Amostras')
+% ylabel('Aceleração(m/s²)')
+% ylim([-10,3]);
 
 
-G=sqrt(g_n(:,1).^2+g_n(:,2).^2+g_n(:,3).^2);
-figure(3)
-plot(v,G)
-title('Módulo da gravidade')
-xlabel('Amostras')
-ylabel('Aceleração(m/s²)')
-ylim([-3,10]);
+% G=sqrt(g_n(:,1).^2+g_n(:,2).^2+g_n(:,3).^2);
+% figure(3)
+% plot(v,G)
+% title('Módulo da gravidade')
+% xlabel('Amostras')
+% ylabel('Aceleração(m/s²)')
+% ylim([-3,10]);
 
 
 
@@ -198,11 +200,11 @@ ruido = nivel_ruido(a_n2,bias);
 
 
 figure(7)
-plot(v,a_n2(:,1),'-s',v,a_n2(:,2),'-p',v,a_n2(:,3),'-o',v,Db,'-*');
+plot(t,a_n2(:,1),'-s',t,a_n2(:,2),'-p',t,a_n2(:,3),'-<',ACC.T,ACC.ay,'->');%,'-o',v,Db,'-*');
 title('Aceleração alinhada e filtrada')
 xlabel('Amostras')
 ylabel('Aceleração(m/s²)')
-legend('X','Y','Z','Dp')
+legend('X','Y','Z','Spline')
 
 %% Integração
 
@@ -242,6 +244,7 @@ plot(Sx_n,Sy_n)
 xlabel('x')
 ylabel('y')
 title('Deslocamento (m)')
+grid on
 
 figure(12)
 plot(v,w(:,1),'-s',v,w(:,2),'-p',v,w(:,3),'-o');
